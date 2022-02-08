@@ -27,7 +27,3 @@ export default command;
 - Run `npm run dev-start`
 ### Or
 - Build the bot with `npm run build` then start it with `npm run start`
-
-
-# Todo
-- Find the way to update commands on every servers

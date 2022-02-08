@@ -7,11 +7,10 @@ config();
 
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
-const GUILD_ID = "470335219128336385";
 
 const commands = getCommandsForRefresh();
 
-async function refreshSlashCommands(GUILD_ID: string) {
+export async function refreshSlashCommands(GUILD_ID: string) {
   if (!CLIENT_ID || !GUILD_ID || !DISCORD_TOKEN) throw new Error("Erreur");
 
   const rest = new REST({ version: "9" }).setToken(DISCORD_TOKEN);
@@ -28,5 +27,3 @@ async function refreshSlashCommands(GUILD_ID: string) {
     console.error(error);
   }
 }
-
-refreshSlashCommands(GUILD_ID);
