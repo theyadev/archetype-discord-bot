@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "rimraf": "./node_modules/rimraf/bin.js",
+    "clean" : "rimraf dist/",
+    "build": "npm run clean && tsc",
     "start": "node dist/index.js",
-    "dev-start": "tsc && node dist/index.js"
+    "dev-start": "npm run build && npm run start"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +18,8 @@
     "discord-api-types": "^0.26.1",
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2"
   }
 }
