@@ -1,5 +1,6 @@
 # Installation
 - Clone the repository
+- Run `npm install`
 - Copy the `.env.example` and rename the copy to `.env`
 - Edit the `.env` with your `Discord bot token` and `Discord bot client id`
 - Start create your commands !
