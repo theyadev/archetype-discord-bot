@@ -1,6 +1,7 @@
 import { config } from "dotenv";
 import { Client, Intents } from "discord.js";
-import { getCommands } from "./commands";
+import { commands } from "./commands";
+import { buttons } from "./buttons";
 import { refreshSlashCommands } from "./refresh";
 
 config();
@@ -8,8 +9,6 @@ config();
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-
-const commands = getCommands();
 
 client.on("ready", async () => {
   console.log(`Logged in as ${client.user?.tag}!`);
@@ -22,16 +21,29 @@ client.on("ready", async () => {
   }
 });
 
+/**
+ * Handle commands
+ */
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
 
   const command = commands.find((e) => e.name == interaction.commandName);
 
-  if (command) {
-    console.log(command);
-    
-    command.execute(interaction);
-  }
+  if (command) command.execute(interaction);
+});
+
+/**
+ * Handle buttons
+ * For this to work you need to set the button name to : `data:buttonName`
+ */
+client.on("interactionCreate", (interaction) => {
+  if (!interaction.isButton()) return;
+
+  const [data, button_name] = interaction.customId.split(":");
+
+  const button = buttons.find((e) => e.name == button_name);
+
+  if (button) button.execute(interaction, data);
 });
 
 client.login(DISCORD_TOKEN);
