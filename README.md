@@ -28,7 +28,7 @@ export default command;
 
 - Make your awesome command !
 
-## How to create a command ?
+## How to create a button ?
 
 - TODO
 
