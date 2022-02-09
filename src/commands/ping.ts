@@ -1,11 +1,15 @@
+import { SlashCommandBuilder } from "@discordjs/builders";
 import { MessageActionRow, MessageButton } from "discord.js";
 
 import { Command } from "../types";
 import { getNameFromPath } from "../util";
 
+const command_data = new SlashCommandBuilder()
+  .setName(getNameFromPath(__filename))
+  .setDescription("Replies with Pong!");
+
 const command: Command = {
-  name: getNameFromPath(__filename),
-  description: "Replies with Pong!",
+  command_data,
   async execute(interaction) {
     // Define a Row including 3 buttons
     /**
