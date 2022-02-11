@@ -8,23 +8,22 @@ config();
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 
-const commands_datas = commands.map((c) => {
-  return c.command_data;
-});
-
-export async function refreshSlashCommands(GUILD_ID: string) {
-  if (!CLIENT_ID || !GUILD_ID || !DISCORD_TOKEN) throw new Error("Erreur");
+export async function refreshSlashCommands(guild_id: string) {
+  if (!CLIENT_ID || !guild_id || !DISCORD_TOKEN) throw new Error("Erreur");
 
   const rest = new REST({ version: "9" }).setToken(DISCORD_TOKEN);
 
+  const commands_data = commands.map((c) => {
+    return c.command_data;
+  });
+
+  const guild_commands = Routes.applicationGuildCommands(CLIENT_ID, guild_id);
+  const options = {
+    body: commands_data,
+  };
+
   try {
-    console.log("Started refreshing application (/) commands.");
-
-    await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), {
-      body: commands_datas,
-    });
-
-    console.log("Successfully reloaded application (/) commands.");
+    await rest.put(guild_commands, options);
   } catch (error) {
     console.error(error);
   }

@@ -16,27 +16,29 @@ client.on("ready", async () => {
   // Refresh commands on every guilds
   const guilds = await client.guilds.fetch();
 
+  const refresh_promises = [];
+
   for (const [id, guild] of guilds) {
-    refreshSlashCommands(id);
+    refresh_promises.push(refreshSlashCommands(id));
   }
+
+  await Promise.all(refresh_promises);
+
+  console.log("Slash commands refreshed !");
 });
 
-/**
- * Handle commands
- */
+// Handle commands
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isCommand()) return;
 
   const command = commands.find(
     (e) => e.command_data.name == interaction.commandName
   );
+
   if (command) command.execute(interaction);
 });
 
-/**
- * Handle buttons
- * For this to work you need to set the button name to : `data:buttonName`
- */
+// Handle buttons
 client.on("interactionCreate", (interaction) => {
   if (!interaction.isButton()) return;
 

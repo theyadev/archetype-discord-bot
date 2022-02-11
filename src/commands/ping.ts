@@ -12,9 +12,7 @@ const command: Command = {
   command_data,
   async execute(interaction) {
     // Define a Row including 3 buttons
-    /**
-     * A reply can have a maxium of 5 rows and rows can have a maximum of 5 buttons
-     */
+    // A reply can have a maxium of 5 rows and rows can have a maximum of 5 buttons
 
     const buttons = [];
 
